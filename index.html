@@ -6,58 +6,6 @@
 <title>Malarte Printing Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
-
-  html, body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-/* Prevent all sections from exceeding viewport */
-section,
-div,
-nav,
-footer {
-  max-width: 100%;
-}
-
-/* HERO TITLE MOBILE FIX */
-.hero-title {
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
-
-/* MOBILE FIXES */
-@media (max-width: 480px) {
-
-  .hero-title {
-    font-size: 3.8rem;
-    line-height: 0.9;
-    letter-spacing: 0.02em;
-  }
-
-  .hero-img-badge {
-    left: 16px;
-    right: 16px;
-    padding: 16px;
-  }
-
-  .loader-counter {
-    font-size: 5rem;
-  }
-
-  .contact-glass {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .video-section,
-  .capabilities,
-  .contact,
-  footer {
-    overflow-x: hidden;
-  }
-}
   @font-face {
     font-family: 'CenturyGothic';
     src: local('Century Gothic'), local('CenturyGothic');
@@ -227,7 +175,6 @@ footer {
   /* RIGHT — image column */
   .hero-img-col {
     position:relative; height:100vh; overflow:hidden;
-    width: 100%;
     animation: fadeSlideRight 1.2s cubic-bezier(.23,1,.32,1) 0.25s both;
   }
   @keyframes fadeSlideRight { from{opacity:0;transform:translateX(32px)} to{opacity:1;transform:translateX(0)} }
@@ -711,8 +658,8 @@ footer {
 <div id="loader">
   <div id="loader-video-bg">
     <iframe
-      src="https://www.youtube.com/embed/9UMc98J3MEg?autoplay=1&mute=1&loop=1&playlist=9UMc98J3MEg&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3&fs=0"
-      allow=" encrypted-media"
+      src="https://www.youtube.com/embed/9UMc98J3MEg?autoplay=1&mute=1&loop=1&playlist=9UMc98J3MEg&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3&enablejsapi=0"
+      allow="autoplay; encrypted-media"
       allowfullscreen title="loader-bg">
     </iframe>
   </div>
@@ -782,7 +729,7 @@ footer {
       </div>
       <div class="stat">
         <div class="stat-num">3<span>D</span></div>
-        <div class="stat-label">Custom Design </div>
+        <div class="stat-label">Custom Design</div>
       </div>
       <div class="stat">
         <div class="stat-num">FDM<span style="font-size:1.4rem"> / SLA</span></div>
@@ -821,7 +768,7 @@ footer {
     <div class="video-frame-wrap" data-anim="scale-up" data-delay="2">
       <div class="video-glass-frame">
         <iframe 
-          src="https://www.youtube.com/embed/9UMc98J3MEg?autoplay=1&mute=1&loop=1&playlist=9UMc98J3MEg&controls=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3&fs=0" 
+          src="https://www.youtube.com/embed/9UMc98J3MEg?rel=0&modestbranding=1&color=white" 
           title="Malarte Printing Studio — watch the process"
           frameborder="0" 
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
