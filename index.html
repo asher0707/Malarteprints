@@ -433,9 +433,161 @@
     border: none;
   }
 
+
+  /* ══════════════════════════════════════════════════
+     SITE LOADER — fullscreen video background reveal
+     ══════════════════════════════════════════════════ */
+  body.loading { overflow: hidden; }
+
+  #loader {
+    position: fixed; inset: 0; z-index: 10000;
+    background: #000;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Fullscreen video */
+  #loader-video-bg {
+    position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+  }
+  #loader-video-bg iframe {
+    position: absolute;
+    width: 177.78vh; height: 56.25vw;
+    min-width: 100%; min-height: 100%;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    border: none; pointer-events: none;
+  }
+  /* dark vignette */
+  #loader-video-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.3) 45%, rgba(0,0,0,0.7) 100%);
+  }
+
+  /* Lime horizontal scan line */
+  .loader-scanline {
+    position: absolute; left: 0; right: 0; height: 1px; z-index: 3;
+    background: linear-gradient(90deg, transparent 0%, var(--lime) 40%, rgba(199,227,6,0.6) 60%, transparent 100%);
+    opacity: 0; pointer-events: none;
+    animation: scanLineAppear 0.5s ease 0.8s forwards, scanDown 2.8s linear 1.3s infinite;
+  }
+  @keyframes scanLineAppear { to { opacity: 0.75; } }
+  @keyframes scanDown {
+    0%   { top: 0%;   opacity: 0.75; }
+    92%  { opacity: 0.75; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  /* Centred branding */
+  .loader-brand {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0; text-align: center;
+  }
+  .loader-logo {
+    font-family: 'CenturyGothic', 'Century Gothic', 'Trebuchet MS', sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase; color: #fff;
+    opacity: 0; margin-bottom: 6px;
+    animation: ldFadeUp 0.9s cubic-bezier(.16,1,.3,1) 0.4s forwards;
+  }
+  .loader-logo span { color: var(--lime); }
+  .loader-tagline {
+    font-size: 0.65rem; font-weight: 500;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4); margin-bottom: 40px;
+    opacity: 0; animation: ldFadeUp 0.7s ease 0.65s forwards;
+  }
+  .loader-counter {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(6rem, 20vw, 15rem);
+    color: #fff; line-height: 1; letter-spacing: 0.02em;
+    opacity: 0; animation: ldFadeUp 0.7s cubic-bezier(.16,1,.3,1) 0.55s forwards;
+    text-shadow: 0 0 80px rgba(199,227,6,0.15);
+  }
+  .loader-pct { font-size: 0.2em; color: var(--lime); vertical-align: super; letter-spacing: 0.12em; }
+
+  /* Progress bar */
+  .loader-track {
+    width: min(360px, 72vw); height: 1.5px;
+    background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;
+    margin-top: 22px; opacity: 0;
+    animation: ldFadeUp 0.5s ease 0.75s forwards;
+  }
+  .loader-fill {
+    height: 100%; width: 0%; background: var(--lime);
+    box-shadow: 0 0 12px var(--lime-glow);
+    border-radius: 2px; transition: width 0.06s linear;
+  }
+
+  @keyframes ldFadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Corner nozzle dot */
+  .loader-nozzle {
+    position: absolute; bottom: 32px; right: 36px; z-index: 3;
+    display: flex; align-items: center; gap: 10px;
+    opacity: 0; animation: ldFadeUp 0.5s ease 1s forwards;
+  }
+  .nozzle-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--lime); box-shadow: 0 0 12px var(--lime);
+    animation: nozzlePulse 1.1s ease-in-out infinite;
+  }
+  .nozzle-label {
+    font-size: 0.62rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35);
+  }
+  @keyframes nozzlePulse {
+    0%,100% { transform: scale(1); opacity: 1; }
+    50%     { transform: scale(1.7); opacity: 0.6; }
+  }
+
+  /* ── EXIT: lime split curtain closes then opens ── */
+  #loader-curtain-top,
+  #loader-curtain-bottom {
+    position: fixed; left: 0; right: 0; z-index: 10001;
+    background: var(--lime); pointer-events: none;
+    transition: transform 0.8s cubic-bezier(.76,0,.24,1);
+  }
+  #loader-curtain-top    { top: 0;    height: 50.5%; transform: translateY(-101%); }
+  #loader-curtain-bottom { bottom: 0; height: 50.5%; transform: translateY(101%); }
+  #loader-curtain-top.show    { transform: translateY(0); }
+  #loader-curtain-bottom.show { transform: translateY(0); }
+  #loader-curtain-top.exit    { transform: translateY(-101%); transition-delay: 0.15s; }
+  #loader-curtain-bottom.exit { transform: translateY(101%);  transition-delay: 0.15s; }
+  #loader.hide { opacity: 0; pointer-events: none; transition: opacity 0.3s ease 0.2s; }
+
 </style>
 </head>
 <body>
+
+<!-- ══ SITE LOADER ══ -->
+<div id="loader">
+  <div id="loader-video-bg">
+    <iframe
+      src="https://www.youtube.com/embed/9UMc98J3MEg?autoplay=1&mute=1&loop=1&playlist=9UMc98J3MEg&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3&enablejsapi=0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen title="loader-bg">
+    </iframe>
+  </div>
+  <div class="loader-scanline"></div>
+  <div class="loader-brand">
+    <div class="loader-logo">Mal<span>arte</span></div>
+    <div class="loader-tagline">Milan · 3D Printing Studio</div>
+    <div class="loader-counter" id="loaderNum">0<span class="loader-pct">%</span></div>
+    <div class="loader-track"><div class="loader-fill" id="loaderFill"></div></div>
+  </div>
+  <div class="loader-nozzle">
+    <div class="nozzle-dot"></div>
+    <div class="nozzle-label">Printing…</div>
+  </div>
+</div>
+<div id="loader-curtain-top"></div>
+<div id="loader-curtain-bottom"></div>
+
 
 <div id="progress-bar"></div>
 <div class="cursor" id="cursor"></div>
@@ -517,7 +669,7 @@
     <div class="video-frame-wrap" data-anim="scale-up" data-delay="2">
       <div class="video-glass-frame">
         <iframe 
-          src="https://youtu.be/9UMc98J3MEg?si=YY1EFYISfdzqowf7" 
+          src="https://www.youtube.com/embed/9UMc98J3MEg?rel=0&modestbranding=1&color=white" 
           title="Malarte Printing Studio — watch the process"
           frameborder="0" 
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -665,6 +817,67 @@
 </footer>
 
 <script>
+  // ══════════════════════════════════════════════
+  //  SITE LOADER — video background
+  // ══════════════════════════════════════════════
+  document.body.classList.add('loading');
+
+  const loaderEl   = document.getElementById('loader');
+  const loaderNum  = document.getElementById('loaderNum');
+  const loaderFill = document.getElementById('loaderFill');
+  const ctTop      = document.getElementById('loader-curtain-top');
+  const ctBot      = document.getElementById('loader-curtain-bottom');
+
+  let progress = 0, raf, done = false;
+
+  function tick() {
+    if (done) return;
+    const spd = progress < 48 ? 2.3 : progress < 74 ? 1.1 : progress < 88 ? 0.45 : 0;
+    if (progress < 88) { progress = Math.min(progress + spd, 88); setP(progress); }
+    raf = requestAnimationFrame(tick);
+  }
+
+  function setP(v) {
+    loaderNum.innerHTML = Math.floor(v) + '<span class="loader-pct">%</span>';
+    loaderFill.style.width = v + '%';
+  }
+
+  function finish() {
+    if (done) return; done = true;
+    cancelAnimationFrame(raf);
+    let s = progress;
+    const id = setInterval(() => {
+      s = Math.min(s + 2.5, 100); setP(s);
+      if (s >= 100) { clearInterval(id); exit(); }
+    }, 14);
+  }
+
+  function exit() {
+    setTimeout(() => {
+      // Lime curtains close (meet in centre)
+      ctTop.classList.add('show');
+      ctBot.classList.add('show');
+      setTimeout(() => {
+        // Hide loader behind curtains
+        loaderEl.classList.add('hide');
+        document.body.classList.remove('loading');
+        // Curtains open to reveal site
+        setTimeout(() => {
+          ctTop.classList.remove('show'); ctTop.classList.add('exit');
+          ctBot.classList.remove('show'); ctBot.classList.add('exit');
+          setTimeout(() => { loaderEl.remove(); ctTop.remove(); ctBot.remove(); }, 1100);
+        }, 100);
+      }, 480);
+    }, 380);
+  }
+
+  requestAnimationFrame(tick);
+  if (document.readyState === 'complete') { setTimeout(finish, 700); }
+  else {
+    window.addEventListener('load', () => setTimeout(finish, 400));
+    setTimeout(finish, 5000);
+  }
+
   // ── Cursor ──
   const cur = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
@@ -725,7 +938,7 @@
     if (!el) return;
     const lines = el.innerHTML.split('<br>');
     el.innerHTML = lines.map(line => {
-      const words = line.trim().replace(/<[^>]*>/g, m => ` ${m} `).split(' ');
+      const words = line.trim().replace(/<[^>]*>/g, m => ` ${m} `).split(' ');
       return words.map(w => {
         if (w.startsWith('<')) return w;
         return w.split('').map((ch, i) =>
@@ -747,8 +960,9 @@
   const heroImgCol = document.querySelector('.hero-img-col .hero-img');
   function onScroll() {
     if (!heroImgCol) return;
-    const scrollY = window.scrollY;
-    heroImgCol.style.transform = `translateY(${scrollY * 0.18}px) scale(1.04)`;
+    const raw = window.scrollY * 0.04;          // very subtle rate
+    const clamped = Math.min(raw, 28);           // never moves more than 28px
+    heroImgCol.style.transform = `translateY(${clamped}px) scale(1.04)`;
   }
   window.addEventListener('scroll', onScroll, {passive:true});
 
