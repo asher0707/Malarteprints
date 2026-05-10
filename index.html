@@ -580,28 +580,33 @@ footer {
      ══════════════════════════════════════════════════ */
   body.loading { overflow: hidden; }
 
-  #loader {
-    position: fixed; inset: 0; z-index: 10000;
+ #loader {
+    position: fixed; 
+    inset: 0; 
+    z-index: 10000;
     background: #000;
-    display: flex; align-items: center; justify-content: center;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
     overflow: hidden;
-  }
+}
+
 #loader-video-bg {
-    position: fixed; /* Or absolute, depending on your layout */
-    top: 0;
-    left: 0;
+    position: absolute;
+    inset: 0; /* Shorthand for top:0, left:0, right:0, bottom:0 */
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    z-index: -1; /* Keeps it behind your content */
-    background: #000; /* Fallback color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #loader-video {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* This ensures the video fills the screen without stretching */
-    pointer-events: none; /* Prevents users from right-clicking or pausing the video */
+    /* This is the magic line for centering and covering the area */
+    object-fit: cover; 
+    pointer-events: none;
 }
   /* Fullscreen video */
   #loader-video-bg {
